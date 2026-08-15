@@ -1,0 +1,16 @@
+services:
+  web:
+    build: .
+    container_name: havana-stones
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    # For production behind a reverse proxy, you can map to 80 directly:
+    # ports:
+    #   - "80:80"
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost/"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 5s

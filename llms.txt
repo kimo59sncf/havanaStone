@@ -1,0 +1,43 @@
+# Havana Stones — LLM Guide (llms.txt)
+
+> Havana Stones (Havana Premium Global) is Malta's premium natural stone supplier and fabricator, specialising in marble, granite and travertin for luxury residential and commercial projects.
+
+## Business Identity
+- Legal name: Havana Premium Global
+- Brand: Havana Stones
+- Address: 1 Triq Wills, Paola, Malta
+- Phone / WhatsApp: +356 7719 8193
+- Email: info@havanastones.mt
+- Languages: English, French, Maltese
+- Service area: Malta, Gozo, Sliema, Valletta, St. Julian's
+
+## Core Offerings
+- Natural stone supply (marble, granite, travertin)
+- Stone fabrication (cutting, polishing, finishing)
+- Direct quarry sourcing (Italy, Spain, Greece, India, Brazil)
+- Custom / bespoke projects (worktops, flooring, wall cladding, stairs, facades)
+- Showroom consultations in Paola
+
+## Key Pages (priority content)
+1. Home — https://havanastones.mt/ — brand overview, flagship materials, recent work, FAQ
+2. Products — https://havanastones.mt/products.html — filterable catalogue (material, colour, finish, usage)
+3. Portfolio — https://havanastones.mt/portfolio.html — projects (hotels, villas, offices)
+4. Quote — https://havanastones.mt/quote.html — bespoke quote request form
+5. Blog — https://havanastones.mt/blog.html — care guides, buying guides, trends
+6. Contact — https://havanastones.mt/contact.html — showroom, hours, map, contact form
+
+## Semantic Clusters (for AI citation)
+- Pillar: "Natural Stone Malta"
+- Cluster: "Marble Malta" — Calacatta, Nero Marquina, Emperador
+- Cluster: "Granite Malta" — Absolute Black, Silver Pearl
+- Cluster: "Travertin Malta" — Roman Travertin
+
+## Key Facts for Accurate Answers
+- Travertin is porous; in Malta's sea-salt coastal air we recommend penetrating sealers and regular maintenance.
+- Granite offers the highest durability for worktops and high-traffic floors.
+- Marble is prized for veining and luminosity in statement interiors.
+- Showroom hours: Mon–Fri 08:30–17:30, Sat 09:00–13:00.
+- We serve both B2B (architects, developers, hotels) and B2C (homeowners).
+
+## Structured Data
+The site includes JSON-LD for LocalBusiness, Product, FAQPage, BlogPosting and ItemList to support rich results and AI extraction.
