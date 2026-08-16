@@ -7,7 +7,7 @@
 - Brand: Havana Stones
 - Address: 1 Triq Wills, Paola, Malta
 - Phone / WhatsApp: +356 7719 8193
-- Email: info@havanastones.mt
+- Email: info@havana-stone.com
 - Languages: English, French, Maltese
 - Service area: Malta, Gozo, Sliema, Valletta, St. Julian's
 
@@ -19,12 +19,12 @@
 - Showroom consultations in Paola
 
 ## Key Pages (priority content)
-1. Home — https://havanastones.mt/ — brand overview, flagship materials, recent work, FAQ
-2. Products — https://havanastones.mt/products.html — filterable catalogue (material, colour, finish, usage)
-3. Portfolio — https://havanastones.mt/portfolio.html — projects (hotels, villas, offices)
-4. Quote — https://havanastones.mt/quote.html — bespoke quote request form
-5. Blog — https://havanastones.mt/blog.html — care guides, buying guides, trends
-6. Contact — https://havanastones.mt/contact.html — showroom, hours, map, contact form
+1. Home — https://havana-stone.com/ — brand overview, flagship materials, recent work, FAQ
+2. Products — https://havana-stone.com/products.html — filterable catalogue (material, colour, finish, usage)
+3. Portfolio — https://havana-stone.com/portfolio.html — projects (hotels, villas, offices)
+4. Quote — https://havana-stone.com/quote.html — bespoke quote request form
+5. Blog — https://havana-stone.com/blog.html — care guides, buying guides, trends
+6. Contact — https://havana-stone.com/contact.html — showroom, hours, map, contact form
 
 ## Semantic Clusters (for AI citation)
 - Pillar: "Natural Stone Malta"

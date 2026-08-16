@@ -56,7 +56,7 @@ havana-stones/
 ## Business info
 - **Havana Premium Global** — 1 Triq Wills, Paola, Malta
 - Phone / WhatsApp: +356 7719 8193
-- Email: info@havanastones.mt
+- Email: info@havana-stone.com
 
 ## Images
 Images currently load from Unsplash (royalty-free). To use your own photos, add them to `assets/images/` and replace the `https://images.unsplash.com/...` URLs in the HTML files. If you place images on your Desktop in a folder named `havana`, they can be copied into `assets/images/`.
@@ -68,4 +68,4 @@ Images currently load from Unsplash (royalty-free). To use your own photos, add 
 - `robots.txt` and `sitemap.xml` configured
 
 ## Production notes
-For deployment, replace the placeholder `https://havanastones.mt/` domain with your real domain. Forms are wired with a demo submit; connect them to a backend (Strapi, Formspree, or a CRM webhook) for production lead capture.
+For deployment, replace the placeholder `https://havana-stone.com/` domain with your real domain. Forms are wired with a demo submit; connect them to a backend (Strapi, Formspree, or a CRM webhook) for production lead capture.
