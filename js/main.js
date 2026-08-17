@@ -86,22 +86,91 @@
     });
   });
 
-  /* ---------- Forms (demo submit) ---------- */
-  document.querySelectorAll("form[data-demo]").forEach((form) => {
-    form.addEventListener("submit", (e) => {
+  /* ---------- Contact form -> email ---------- */
+  document.querySelectorAll("form[data-contact]").forEach((form) => {
+    form.addEventListener("submit", async (e) => {
       e.preventDefault();
       const btn = form.querySelector('button[type="submit"]');
       const original = btn.textContent;
       btn.textContent = "Sending…";
       btn.disabled = true;
-      setTimeout(() => {
-        btn.textContent = "Request sent ✓";
+
+      try {
+        const res = await fetch("/api/contact", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: form.querySelector('[name="name"]')?.value || "",
+            email: form.querySelector('[name="email"]')?.value || "",
+            message: form.querySelector('[name="message"]')?.value || "",
+          }),
+        });
+
+        if (!res.ok) throw new Error("Failed to send message.");
+
+        btn.textContent = "Message sent ✓";
+        form.reset();
         setTimeout(() => {
           btn.textContent = original;
           btn.disabled = false;
-          form.reset();
-        }, 2200);
-      }, 900);
+        }, 3000);
+      } catch (err) {
+        console.error("Contact form error:", err);
+        alert("Sorry, your message could not be sent. Please try again or contact us directly.");
+        btn.textContent = original;
+        btn.disabled = false;
+      }
+    });
+  });
+
+  /* ---------- Quote form -> Stripe Checkout ---------- */
+  document.querySelectorAll("form[data-quote]").forEach((form) => {
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const surfaceInput = form.querySelector('input[name="surface"]');
+      const surface = parseFloat(surfaceInput && surfaceInput.value);
+      if (!surface || surface <= 0) {
+        alert("Please enter a valid surface area in m².");
+        return;
+      }
+
+      const name = (form.querySelector('input[name="name"]') || {}).value || "Custom Stone Project";
+      const material = (form.querySelector('select[name="material"]') || {}).value || "Natural Stone";
+      const usage = (form.querySelector('select[name="usage"]') || {}).value || "";
+
+      const btn = form.querySelector('button[type="submit"]');
+      const original = btn.textContent;
+      btn.textContent = "Redirecting…";
+      btn.disabled = true;
+
+      try {
+        const res = await fetch("/api/create-checkout-session", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            items: [
+              {
+                name: `${material} — ${usage || "Custom Project"}`,
+                price: 27, // € per m²
+                qty: surface,
+              },
+            ],
+          }),
+        });
+
+        const data = await res.json();
+        if (!res.ok) {
+          throw new Error(data.error || "Failed to start checkout.");
+        }
+
+        window.location.href = data.url;
+      } catch (err) {
+        console.error("Checkout error:", err);
+        alert("Sorry, checkout could not be started. Please try again or contact us.");
+        btn.textContent = original;
+        btn.disabled = false;
+      }
     });
   });
 
@@ -262,19 +331,51 @@
     });
   });
 
-  // Checkout -> quote page
+  // Checkout -> Stripe Checkout (card payment)
   document.querySelectorAll("[data-checkout]").forEach((el) => {
-    el.addEventListener("click", () => {
-      const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
-      const summary = cart.map((i) => `${i.name} x${i.qty} m²`).join(", ");
-      const url =
-        "quote.html?cart=" +
-        encodeURIComponent(summary) +
-        "&total=" +
-        encodeURIComponent("€" + total.toFixed(2));
-      window.location.href = url;
+    el.addEventListener("click", async () => {
+      if (cart.length === 0) return;
+
+      // Build items payload for the backend
+      const items = cart.map((i) => ({
+        name: i.name,
+        price: i.price, // € per m²
+        qty: i.qty, // m²
+      }));
+
+      const btn = el;
+      const original = btn.textContent;
+      btn.textContent = "Redirecting…";
+      btn.disabled = true;
+
+      try {
+        const res = await fetch("/api/create-checkout-session", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ items }),
+        });
+
+        const data = await res.json();
+        if (!res.ok) {
+          throw new Error(data.error || "Failed to start checkout.");
+        }
+
+        // Redirect to Stripe-hosted Checkout page
+        window.location.href = data.url;
+      } catch (err) {
+        console.error("Checkout error:", err);
+        alert("Sorry, checkout could not be started. Please try again or contact us.");
+        btn.textContent = original;
+        btn.disabled = false;
+      }
     });
   });
+
+  // Clear cart on success page (after Stripe payment)
+  if (window.location.search.includes("session_id")) {
+    localStorage.removeItem(CART_KEY);
+    cart = [];
+  }
 
   // Init
   renderCart();

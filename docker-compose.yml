@@ -4,12 +4,14 @@ services:
     container_name: havana-stones
     restart: unless-stopped
     ports:
-      - "8080:80"
-    # For production behind a reverse proxy, you can map to 80 directly:
-    # ports:
-    #   - "80:80"
+      - "8080:3000"
+    environment:
+      - STRIPE_SECRET_KEY=${STRIPE_SECRET_KEY}
+      - STRIPE_WEBHOOK_SECRET=${STRIPE_WEBHOOK_SECRET:-}
+      - BASE_URL=${BASE_URL:-http://localhost:8080}
+      - PORT=3000
     healthcheck:
-      test: ["CMD", "wget", "-qO-", "http://localhost/"]
+      test: ["CMD", "wget", "-qO-", "http://localhost:3000/"]
       interval: 30s
       timeout: 3s
       retries: 3

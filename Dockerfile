@@ -1,20 +1,18 @@
-# Havana Stones — Static site served by Nginx
-FROM nginx:1.27-alpine
+# Havana Stones — Node.js server (static site + Stripe Checkout API)
+FROM node:20-alpine
 
-# Remove default config
-RUN rm -f /etc/nginx/conf.d/default.conf
+WORKDIR /app
 
-# Copy custom nginx config
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+# Install dependencies
+COPY package.json ./
+RUN npm install --omit=dev
 
-# Copy static site
-COPY . /usr/share/nginx/html
+# Copy app source
+COPY . .
 
-# Expose port 80
-EXPOSE 80
+# Expose port (server.js uses PORT env, default 3000)
+EXPOSE 3000
 
-# Healthcheck
-HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-  CMD wget -qO- http://localhost/ >/dev/null 2>&1 || exit 1
+ENV NODE_ENV=production
 
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["node", "server.js"]
