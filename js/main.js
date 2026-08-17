@@ -86,49 +86,18 @@
     });
   });
 
-  /* ---------- Contact form -> Web3Forms (direct browser POST) ---------- */
-  document.querySelectorAll("form[data-contact]").forEach((form) => {
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const btn = form.querySelector('button[type="submit"]');
-      const original = btn.textContent;
-      btn.textContent = "Sending…";
-      btn.disabled = true;
-
-      const name = form.querySelector('[name="name"]')?.value || "";
-      const email = form.querySelector('[name="email"]')?.value || "";
-      const message = form.querySelector('[name="message"]')?.value || "";
-
-      try {
-        const formData = new FormData();
-        formData.append("access_key", "9fa1cfcd-7bb3-4d2c-9297-3aca633a23c3");
-        formData.append("subject", "Havana Stones — New message from " + name);
-        formData.append("from_name", name);
-        formData.append("email", email);
-        formData.append("message", "Name: " + name + "\nEmail: " + email + "\n\nMessage:\n" + message);
-
-        const res = await fetch("https://api.web3forms.com/submit", {
-          method: "POST",
-          body: formData,
-        });
-
-        const data = await res.json();
-        if (!data.success) throw new Error(data.message || "Failed to send message.");
-
-        btn.textContent = "Message sent ✓";
-        form.reset();
-        setTimeout(() => {
-          btn.textContent = original;
-          btn.disabled = false;
-        }, 3000);
-      } catch (err) {
-        console.error("Contact form error:", err);
-        alert("Sorry, your message could not be sent. Please try again or contact us directly.");
-        btn.textContent = original;
-        btn.disabled = false;
-      }
-    });
-  });
+  /* ---------- Contact form -> FormSubmit.co (no JS needed, native submit) ---------- */
+  // Show success message if redirected back with ?sent=1
+  if (window.location.search.includes("sent=1")) {
+    const formCard = document.querySelector(".form-card");
+    if (formCard) {
+      formCard.innerHTML = '<div style="text-align:center;padding:40px;"><div style="font-size:48px;margin-bottom:16px;">✓</div><h3>Message Sent!</h3><p>We\'ll get back to you shortly.</p></div>';
+    }
+    // Clean URL
+    if (window.history && window.history.replaceState) {
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }
+  }
 
   /* ---------- Quote form -> Stripe Checkout ---------- */
   document.querySelectorAll("form[data-quote]").forEach((form) => {
