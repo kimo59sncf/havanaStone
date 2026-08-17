@@ -86,7 +86,7 @@
     });
   });
 
-  /* ---------- Contact form -> email ---------- */
+  /* ---------- Contact form -> Web3Forms (direct browser POST) ---------- */
   document.querySelectorAll("form[data-contact]").forEach((form) => {
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
@@ -95,18 +95,25 @@
       btn.textContent = "Sending…";
       btn.disabled = true;
 
+      const name = form.querySelector('[name="name"]')?.value || "";
+      const email = form.querySelector('[name="email"]')?.value || "";
+      const message = form.querySelector('[name="message"]')?.value || "";
+
       try {
-        const res = await fetch("/api/contact", {
+        const formData = new FormData();
+        formData.append("access_key", "9fa1cfcd-7bb3-4d2c-9297-3aca633a23c3");
+        formData.append("subject", "Havana Stones — New message from " + name);
+        formData.append("from_name", name);
+        formData.append("email", email);
+        formData.append("message", "Name: " + name + "\nEmail: " + email + "\n\nMessage:\n" + message);
+
+        const res = await fetch("https://api.web3forms.com/submit", {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            name: form.querySelector('[name="name"]')?.value || "",
-            email: form.querySelector('[name="email"]')?.value || "",
-            message: form.querySelector('[name="message"]')?.value || "",
-          }),
+          body: formData,
         });
 
-        if (!res.ok) throw new Error("Failed to send message.");
+        const data = await res.json();
+        if (!data.success) throw new Error(data.message || "Failed to send message.");
 
         btn.textContent = "Message sent ✓";
         form.reset();
